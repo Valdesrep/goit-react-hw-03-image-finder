@@ -103,7 +103,8 @@ export class App extends Component {
           )}
           {modalShow &&
             (Notiflix.Loading.circle('Please wait ...'),
-            (<Modal onClose={this.onModalClose} img={imgInModal} />))}
+            (<Modal onClose={this.onModalClose} img={imgInModal} />),
+               Notiflix.Loading.remove();
         </div>
       );
     }
