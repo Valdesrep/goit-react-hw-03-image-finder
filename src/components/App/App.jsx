@@ -101,10 +101,7 @@ export class App extends Component {
           {isVisible && (
             <Button onClick={this.onLoadMore} page={this.state.page} />
           )}
-          {modalShow &&
-            (Notiflix.Loading.circle('Please wait ...'),
-            (<Modal onClose={this.onModalClose} img={imgInModal} />),
-            Notiflix.Loading.remove())}
+          {modalShow && <Modal onClose={this.onModalClose} img={imgInModal} />}
         </div>
       );
     }
