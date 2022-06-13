@@ -1,22 +1,33 @@
+import React, { Component } from 'react';
 import propTypes from 'prop-types';
-import s from './ImageGalery.module.css';
+import s from './ImageGallery.module.css';
 import ImageGalleryItem from 'components/ImageGalleryItem';
 
-const ImageGalery = ({}) => {
-  return <ul className={gallery}>{}</ul>;
+export class ImageGallery extends Component {
+  render() {
+    return (
+      <>
+        <ul className={s.ImageGallery}>
+          {this.props.images.map((image, index) => (
+            <ImageGalleryItem
+              key={index}
+              image={image}
+              openModal={this.props.openModal}
+            />
+          ))}
+        </ul>
+      </>
+    );
+  }
+}
+
+ImageGallery.propTypes = {
+  openModal: propTypes.func.isRequired,
+  images: propTypes.arrayOf(
+    propTypes.shape({
+      webformatURL: propTypes.string.isRequired,
+    })
+  ).isRequired,
 };
 
-export default ImageGalery;
-
-const API_KEY = 26220037 - ba2b9defb736764e21d2f2b28;
-
-
-
-async function fetchImage(img, page) {
-  const params = `image_type=photo&orientation=horizontal&safesearch=true&per_page=40&page=${page}`;
-  const response = await axios.get(
-    `${BASE_URL}?key=${API_KEY}&q=${img}&${params}`
-  );
-  const images = response.data;
-  return images;
-}
+export default ImageGallery;

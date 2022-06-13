@@ -1,12 +1,27 @@
+import React, { Component } from 'react';
 import propTypes from 'prop-types';
 import s from './ImageGalleryItem.module.css';
 
-const ImageGalleryItem = ({}) => {
-  return (
-    <li className={gallery - item}>
-      <img src="" alt="" />
-    </li>
-  );
+export class ImageGalleryItem extends Component {
+  render() {
+    return (
+      <li className={s.ImageGalleryItem}>
+        <img
+          className={s.ImageGalleryItemImage}
+          onClick={() => {
+            this.props.openModal(this.props.image);
+          }}
+          src={this.props.image.webformatURL}
+          alt=""
+        />
+      </li>
+    );
+  }
+}
+
+ImageGalleryItem.propTypes = {
+  openModal: propTypes.func.isRequired,
+  image: propTypes.string.isRequired,
 };
 
 export default ImageGalleryItem;
