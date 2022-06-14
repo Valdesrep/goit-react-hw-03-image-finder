@@ -8,9 +8,9 @@ export class ImageGallery extends Component {
     return (
       <>
         <ul className={s.ImageGallery}>
-          {this.props.images.map((image, index) => (
+          {this.props.images.map((image, id) => (
             <ImageGalleryItem
-              key={index}
+              key={id}
               image={image}
               openModal={this.props.openModal}
             />
@@ -26,6 +26,7 @@ ImageGallery.propTypes = {
   images: propTypes.arrayOf(
     propTypes.shape({
       webformatURL: propTypes.string.isRequired,
+      id: propTypes.number.isRequired,
     })
   ).isRequired,
 };

@@ -21,7 +21,11 @@ export class ImageGalleryItem extends Component {
 
 ImageGalleryItem.propTypes = {
   openModal: propTypes.func.isRequired,
-  image: propTypes.string.isRequired,
+  image: propTypes.arrayOf(
+    propTypes.shape({
+      webformatURL: propTypes.string.isRequired,
+    })
+  ).isRequired,
 };
 
 export default ImageGalleryItem;

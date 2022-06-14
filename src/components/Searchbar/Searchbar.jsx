@@ -17,7 +17,7 @@ class Searchbar extends Component {
     e.preventDefault();
     this.props.onSubmit(this.state.image);
     this.setState({
-      image: '',
+      image: e.currentTarget.value,
     });
   };
 

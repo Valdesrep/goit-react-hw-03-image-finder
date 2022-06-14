@@ -16,6 +16,7 @@ export class App extends Component {
     imagesInGallery: [],
     modalShow: false,
     status: 'idle',
+    total: 0,
   };
 
   async componentDidUpdate(_, prevState) {
@@ -24,19 +25,7 @@ export class App extends Component {
     const imageChange = image.trim() && prevState.image !== image;
 
     try {
-      if (imageChange) {
-        this.setState({
-          status: 'pending',
-        });
-
-        const imagesInGallery = await fetchImage(image);
-        this.setState({
-          imagesInGallery,
-          status: 'resolved',
-        });
-      }
-
-      if (pageChange) {
+      if (imageChange || pageChange) {
         this.setState({
           status: 'pending',
         });
@@ -65,9 +54,7 @@ export class App extends Component {
   };
 
   onLoadMore = page => {
-    this.setState({
-      page,
-    });
+    this.setState(prevState => ({ page: prevState.page + 1 }));
   };
 
   onModalOpen = imgInModal => {
@@ -98,9 +85,7 @@ export class App extends Component {
         <div className={s.App}>
           <Searchbar onSubmit={this.getImage} />;
           <ImageGallery images={imagesInGallery} openModal={this.onModalOpen} />
-          {isVisible && (
-            <Button onClick={this.onLoadMore} page={this.state.page} />
-          )}
+          {isVisible && <Button onClick={this.onLoadMore} />}
           {modalShow && <Modal onClose={this.onModalClose} img={imgInModal} />}
         </div>
       );
