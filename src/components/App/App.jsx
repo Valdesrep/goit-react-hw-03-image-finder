@@ -87,7 +87,7 @@ export class App extends Component {
   };
 
   render() {
-    const { imagesInGallery, imgInModal, modalShow, status } = this.state;
+    const { imagesInGallery, imgInModal, modalShow } = this.state;
 
     const isVisible = imagesInGallery.length > 0;
 
