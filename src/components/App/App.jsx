@@ -24,28 +24,13 @@ export class App extends Component {
     const imageChange = image.trim() && prevState.image !== image;
 
     try {
-      if (imageChange) {
+      if (imageChange || pageChange) {
         this.setState({
           status: 'pending',
         });
         Notiflix.Loading.circle('Please wait ...');
 
-        const imagesInGallery = await fetchImage(image);
-        this.setState({
-          imagesInGallery,
-          status: 'resolved',
-        });
-        Notiflix.Loading.remove();
-      }
-
-      if (pageChange) {
-        this.setState({
-          status: 'pending',
-        });
-        Notiflix.Loading.circle('Please wait...');
-
         const imagesInGallery = await fetchImage(image, page);
-
         this.setState(prevState => ({
           imagesInGallery: [...prevState.imagesInGallery, ...imagesInGallery],
           status: 'resolved',
@@ -66,6 +51,8 @@ export class App extends Component {
   getImage = image => {
     this.setState({
       image,
+      page: 1,
+      imagesInGallery: [],
     });
   };
 
