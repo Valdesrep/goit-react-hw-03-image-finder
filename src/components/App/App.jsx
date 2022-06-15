@@ -42,7 +42,7 @@ export class App extends Component {
         this.setState({
           status: 'pending',
         });
-        Notiflix.Loading.circle('Please wait ...');
+        Notiflix.Loading.circle('Please wait...');
 
         const imagesInGallery = await fetchImage(image, page);
 
