@@ -16,7 +16,6 @@ export class App extends Component {
     imagesInGallery: [],
     modalShow: false,
     status: 'idle',
-    total: 0,
   };
 
   async componentDidUpdate(_, prevState) {
@@ -29,18 +28,21 @@ export class App extends Component {
         this.setState({
           status: 'pending',
         });
+        Notiflix.Loading.circle('Please wait ...');
 
         const imagesInGallery = await fetchImage(image);
         this.setState({
           imagesInGallery,
           status: 'resolved',
         });
+        Notiflix.Loading.remove();
       }
 
       if (pageChange) {
         this.setState({
           status: 'pending',
         });
+        Notiflix.Loading.circle('Please wait ...');
 
         const imagesInGallery = await fetchImage(image, page);
 
@@ -48,11 +50,13 @@ export class App extends Component {
           imagesInGallery: [...prevState.imagesInGallery, ...imagesInGallery],
           status: 'resolved',
         }));
+        Notiflix.Loading.remove();
       }
     } catch {
       this.setState({
         status: 'rejected',
       });
+      Notiflix.Notify.warning('error');
     }
     if (this.state.imagesInGallery.length > 0) {
       scroll.scrollToBottom();
@@ -87,27 +91,13 @@ export class App extends Component {
 
     const isVisible = imagesInGallery.length > 0;
 
-    if (status === 'idle') {
-      return <Searchbar onSubmit={this.getImage} />;
-    }
-
-    if (status === 'resolved') {
-      Notiflix.Loading.remove();
-      return (
-        <div className={s.App}>
-          <Searchbar onSubmit={this.getImage} />;
-          <ImageGallery images={imagesInGallery} openModal={this.onModalOpen} />
-          {isVisible && <Button onClick={this.onLoadMore} />}
-          {modalShow && <Modal onClose={this.onModalClose} img={imgInModal} />}
-        </div>
-      );
-    }
-    if (status === 'pending') {
-      Notiflix.Loading.circle('Please wait ...');
-    }
-
-    if (status === 'rejectd') {
-      Notiflix.Notify.warning('error');
-    }
+    return (
+      <div className={s.App}>
+        <Searchbar onSubmit={this.getImage} />;
+        <ImageGallery images={imagesInGallery} openModal={this.onModalOpen} />
+        {isVisible && <Button onClick={this.onLoadMore} />}
+        {modalShow && <Modal onClose={this.onModalClose} img={imgInModal} />}
+      </div>
+    );
   }
 }
