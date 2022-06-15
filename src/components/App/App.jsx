@@ -25,7 +25,19 @@ export class App extends Component {
     const imageChange = image.trim() && prevState.image !== image;
 
     try {
-      if (imageChange || pageChange) {
+      if (imageChange) {
+        this.setState({
+          status: 'pending',
+        });
+
+        const imagesInGallery = await fetchImage(image);
+        this.setState({
+          imagesInGallery,
+          status: 'resolved',
+        });
+      }
+
+      if (pageChange) {
         this.setState({
           status: 'pending',
         });
@@ -53,7 +65,7 @@ export class App extends Component {
     });
   };
 
-  onLoadMore = page => {
+  onLoadMore = () => {
     this.setState(prevState => ({ page: prevState.page + 1 }));
   };
 

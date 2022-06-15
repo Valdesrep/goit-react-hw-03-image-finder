@@ -16,9 +16,6 @@ class Searchbar extends Component {
   onFormSubit = e => {
     e.preventDefault();
     this.props.onSubmit(this.state.image);
-    this.setState({
-      image: e.currentTarget.value,
-    });
   };
 
   render() {
