@@ -94,7 +94,9 @@ export class App extends Component {
     return (
       <div className={s.App}>
         <Searchbar onSubmit={this.getImage} />;
-        <ImageGallery images={imagesInGallery} openModal={this.onModalOpen} />
+        {imagesInGallery.length > 0 && (
+          <ImageGallery images={imagesInGallery} openModal={this.onModalOpen} />
+        )}
         {isVisible && <Button onClick={this.onLoadMore} />}
         {modalShow && <Modal onClose={this.onModalClose} img={imgInModal} />}
       </div>
